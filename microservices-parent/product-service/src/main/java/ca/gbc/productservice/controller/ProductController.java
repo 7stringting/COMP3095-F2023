@@ -1,7 +1,7 @@
-package ca.gbc.productservice.controller; // Update with your actual package name
+package ca.gbc.productservice.controller;
 
 import ca.gbc.productservice.dto.ProductRequest;
-import ca.gbc.productservice.dto.ProductResponse; // Import ProductResponse
+import ca.gbc.productservice.dto.ProductResponse;
 import ca.gbc.productservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,10 +36,7 @@ public class ProductController {
 
     @PutMapping("/updateProduct") // New endpoint
     public ResponseEntity<Void> updateProduct(@RequestBody ProductRequest productRequest) {
-        // Call ProductService to update the product
         productService.updateProduct(productRequest);
-
-        // Return a ResponseEntity with NO_CONTENT status
         return ResponseEntity.noContent().build();
     }
 

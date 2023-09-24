@@ -1,4 +1,4 @@
-package ca.gbc.productservice.service; // Update with your actual package name
+package ca.gbc.productservice.service;
 
 import ca.gbc.productservice.dto.ProductRequest;
 import ca.gbc.productservice.dto.ProductResponse;
@@ -15,7 +15,4 @@ public interface ProductService {
 
     void deleteProduct(String id);
 
-
-
-    // Other methods...
 }

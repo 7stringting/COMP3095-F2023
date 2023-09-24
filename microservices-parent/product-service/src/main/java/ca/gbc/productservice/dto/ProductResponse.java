@@ -1,4 +1,4 @@
-package ca.gbc.productservice.dto; // Update with your actual package name
+package ca.gbc.productservice.dto;
 
 import java.math.BigDecimal;
 

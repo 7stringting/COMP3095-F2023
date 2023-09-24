@@ -1,10 +1,10 @@
-package ca.gbc.productservice.repository; // Update with your actual package name
+package ca.gbc.productservice.repository;
 
 import ca.gbc.productservice.model.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import java.util.List; // Import List
+import java.util.List;
 
 public interface ProductRepository extends MongoRepository<Product, String> {
-        // Correct the return type to List<Product>
+
         List<Product> findAll();
 }

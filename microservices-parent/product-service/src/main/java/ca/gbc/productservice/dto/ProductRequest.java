@@ -1,4 +1,4 @@
-package ca.gbc.productservice.dto; // Update with your actual package name
+package ca.gbc.productservice.dto;
 
 import java.math.BigDecimal;
 
@@ -9,13 +9,9 @@ public class ProductRequest {
     private String description;
     private BigDecimal price;
 
-    // Constructors, getters, and setters
-
-    // Default constructor
     public ProductRequest() {
     }
 
-    // Parameterized constructor
     public ProductRequest(String id,String name, String description, BigDecimal price) {
         this.id = id;
         this.name = name;
@@ -23,7 +19,6 @@ public class ProductRequest {
         this.price = price;
     }
 
-    // Getters and setters
     public String getId() {
         return id;
     }
