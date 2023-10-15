@@ -4,62 +4,76 @@ import ca.gbc.productservice.dto.ProductRequest;
 import ca.gbc.productservice.dto.ProductResponse;
 import ca.gbc.productservice.model.Product;
 import ca.gbc.productservice.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Service
+@RequiredArgsConstructor
 @Slf4j
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
+    private final MongoTemplate mongoTemplate;
+    @Override
+    public void createProducts(ProductRequest productRequest) {
+        log.info("Creating a new product {}",productRequest.getName());
 
-    @Autowired
-    public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+        Product product = Product.builder()
+                .name(productRequest.getName())
+                .description(productRequest.getDescription())
+                .price(productRequest.getPrice())
+                .build();
+        productRepository.save(product);
+
+        log.info("Product {} is saved",product.getId());
     }
 
     @Override
-    public void createProduct(ProductRequest productRequest) {
-        Product product = mapProductRequestToProduct(productRequest);
-        productRepository.save(product);
-        log.info("Created a new product: {}", product);
+    public String updateProduct(String productId, ProductRequest productRequest) {
+        log.info("updating product with Id {}",productId);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(productId));
+        Product product = mongoTemplate.findOne(query,Product.class);
+
+        if(product != null){
+            product.setName(productRequest.getName());
+            product.setDescription(productRequest.getDescription());
+            product.setPrice(productRequest.getPrice());
+
+            log.info("Product {} is updated",product.getId());
+            return productRepository.save(product).getId();
+
+        }
+
+        return productId.toString();
+
+    }
+
+    @Override
+    public void deleteProduct(String productId) {
+        log.info("Product {} is deleted", productId);
+        productRepository.deleteById(productId);
     }
 
     @Override
     public List<ProductResponse> getAllProducts() {
+        log.info("Returning list of products");
         List<Product> products = productRepository.findAll();
-        return products.stream()
-                .map(product -> new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice()))
-                .collect(Collectors.toList());
+        return products.stream().map(this::maptoProductsResponse).toList();
     }
 
-    private Product mapProductRequestToProduct(ProductRequest productRequest) {
-
-        return new Product();
+    private ProductResponse maptoProductsResponse(Product product){
+        return  ProductResponse.builder()
+                .Id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .build();
     }
-
-    @Override
-    public void updateProduct(ProductRequest productRequest) {
-        Optional<Product> existingProduct = productRepository.findById(productRequest.getId());
-        if (existingProduct.isEmpty()) {
-            log.error("Product with id '{}' not found for update.", productRequest.getId());
-        } else {
-            Product productToUpdate = existingProduct.get();
-            productToUpdate.setName(productRequest.getName());
-            productToUpdate.setDescription(productRequest.getDescription());
-            productToUpdate.setPrice(productRequest.getPrice());
-            productRepository.save(productToUpdate);
-            log.info("Updated product with id: {}", productRequest.getId());
-        }
-    }
-    public void deleteProduct(String id) {
-        productRepository.deleteById(id);
-        log.info("Deleted product with id: {}", id);
-    }
-
 }

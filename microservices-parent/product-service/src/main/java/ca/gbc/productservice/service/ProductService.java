@@ -7,12 +7,11 @@ import java.util.List;
 
 public interface ProductService {
 
-    // Define service methods
-    void createProduct(ProductRequest productRequest);
+    void createProducts(ProductRequest productRequest);
+
+    String updateProduct(String productId, ProductRequest productRequest);
+
+    void deleteProduct(String productId);
+
     List<ProductResponse> getAllProducts();
-
-    void updateProduct(ProductRequest productRequest);
-
-    void deleteProduct(String id);
-
 }
