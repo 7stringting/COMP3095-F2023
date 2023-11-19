@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import java.util.List;
 
@@ -13,17 +12,15 @@ import java.util.List;
 @Table(name = "t_order")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String OrderNumber;
+    private String orderNumber;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade =CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade =  CascadeType.ALL)
     private List<OrderLineItem> orderLineItemList;
-
-
 }

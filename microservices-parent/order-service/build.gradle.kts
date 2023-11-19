@@ -30,6 +30,13 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation(platform("org.testcontainers:testcontainers-bom:1.18.3"))
+    testImplementation("org.testcontainers:postgresql:1.18.3")
+    testImplementation("org.testcontainers:junit-jupiter")
+    implementation("org.springframework.boot:spring-boot-starter-webflux:3.1.3")
+    implementation("org.apache.httpcomponents.client5:httpclient5:5.2.1")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.3")
+    testImplementation("com.square.okhttp3:mockwebserver:4.12.0")
 }
 
 tasks.withType<Test> {
