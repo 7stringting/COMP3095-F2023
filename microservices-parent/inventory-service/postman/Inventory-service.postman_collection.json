@@ -1,0 +1,32 @@
+{
+	"info": {
+		"_postman_id": "deb0616f-d451-44e8-b289-5b214f262151",
+		"name": "Inventory-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29886774",
+		"_collection_link": "https://lively-crescent-217971.postman.co/workspace/COMP3095~3892e6cb-aa4c-4b84-8bbe-dd6e26e42fa0/collection/29886774-deb0616f-d451-44e8-b289-5b214f262151?action=share&source=collection_link&creator=29886774"
+	},
+	"item": [
+		{
+			"name": "IsInStock",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8083/api/inventory/sku_12345",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"api",
+						"inventory",
+						"sku_12345"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
